@@ -1,0 +1,86 @@
+class ATM:
+    # Constructor to initialize the ATM object
+    def __init__(self):
+        self.pin = ''  # Stores the user's PIN
+        self.balance = 0  # Stores the user's account balance
+        self.manu()  # Calls the menu method to start the program
+
+    # Method to display the menu and handle user input
+    def manu(self):
+        user_input = input('''
+        Hi, how can I help you?
+        1. Press 1 to create pin
+        2. Press 2 to change pin
+        3. Press 3 to check balance
+        4. Press 4 to withdraw
+        5. Anything else to exit
+        ''')
+        # Handle the user's choice
+        if user_input == '1':
+            self.create_pin()  # Call method to create a PIN
+        elif user_input == '2':
+            self.change_pin()  # Call method to change the PIN
+        elif user_input == '3':
+            self.check_balance()  # Call method to check the balance
+        elif user_input == '4':
+            self.withdraw()  # Call method to withdraw money
+        else:
+            exit()  # Exit the program
+
+    # Method to create a new PIN
+    def create_pin(self):
+        user_pin = input('Enter your pin: ')  # Input for the PIN
+        self.pin = user_pin  # Set the entered PIN
+
+        user_balance = int(input("Enter balance: "))  # Input for initial balance
+        self.balance = user_balance  # Set the balance
+
+        print("Pin created successfully.")  # Confirmation message
+        self.manu()  # Go back to the menu
+
+    # Method to change the existing PIN
+    def change_pin(self):
+        old_pin = input('Enter old pin: ')  # Input for the current PIN
+
+        if old_pin == self.pin:  # Check if the current PIN matches
+            new_pin = input("Enter new pin: ")  # Input for the new PIN
+            self.pin = new_pin  # Update the PIN
+            print("Pin changed successfully.")
+        else:
+            print('Old pin incorrect.')  # Error message if PIN does not match
+
+        self.manu()  # Go back to the menu
+
+    # Method to check account balance
+    def check_balance(self):
+        user_pin = input('Enter your pin: ')  # Input for the PIN
+
+        if user_pin == self.pin:  # Verify the PIN
+            print('Your balance is:', self.balance)  # Display the balance
+        else:
+            print('Incorrect PIN. Cannot show balance.')  # Error message
+
+        self.manu()  # Go back to the menu
+
+    # Method to withdraw money
+    def withdraw(self):
+        user_pin = input('Enter your pin: ')  # Input for the PIN
+
+        if user_pin == self.pin:  # Verify the PIN
+            amount = int(input('Enter amount: '))  # Input for withdrawal amount
+            if amount <= self.balance:  # Check if sufficient balance exists
+                self.balance = self.balance - amount  # Deduct the amount
+                print('''
+                Withdraw successful.
+                Your new balance is:
+                ''', self.balance)  # Display the new balance
+            else:
+                print('Insufficient balance.')  # Error message for insufficient funds
+        else:
+            print('Incorrect PIN.')  # Error message for incorrect PIN
+
+        self.manu()  # Go back to the menu
+
+# Create an instance of the ATM class to start the program
+obj = ATM()
+print(obj)  # Print the object details (optional, mainly for debugging)
